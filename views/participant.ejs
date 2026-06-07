@@ -1,0 +1,52 @@
+<% const s=state; %>
+  <%- include('partials/head', { title: s.me.name + ' — ' + s.game.name }) %>
+
+    <div class="participant" data-token="<%= s.me.token %>">
+      <h1>Hi <%= s.me.name %> 👋</h1>
+      <p class="muted">
+        <%= s.game.name %> — your teams, fixtures and the live league table update automatically.
+      </p>
+
+      <!-- My teams -->
+      <div class="card">
+        <h2>Your teams</h2>
+        <div class="team-cards">
+          <% s.myTeams.forEach(function(t) { %>
+            <div class="team-card tier-bg-<%= t.tier %>">
+              <div class="tc-name"><%- flag(t.name) %>
+                  <%= t.name %>
+              </div>
+              <div class="tc-meta">Group <%= t.group %> · FIFA #<%= t.fifaRank %>
+              </div>
+              <%- include('partials/tier-badge', { tier: t.tier, multiplier: t.multiplier }) %>
+            </div>
+            <% }); %>
+        </div>
+        <p class="muted small">Points multiplied based on <a href="https://inside.fifa.com/fifa-world-ranking/men"
+            target="_blank">FIFA World Ranking</a>: "B tier" teams ×2, "C tier" teams ×3 — underdogs win bigger.</p>
+      </div>
+
+      <!-- League table -->
+      <div class="card">
+        <h2>League table</h2>
+        <div data-table>
+          <%- include('partials/league-table', { table: s.table, highlightId: s.me.id }) %>
+        </div>
+      </div>
+
+      <!-- My fixtures -->
+      <div class="card">
+        <h2>Your fixtures</h2>
+        <div class="fixtures" data-fixtures>
+          <% s.myFixtures.forEach(function(f) { %>
+            <%- include('partials/fixture-card', { f: f }) %>
+              <% }); %>
+                <% if (s.myFixtures.length===0) { %>
+                  <p class="muted">No fixtures yet.</p>
+                  <% } %>
+        </div>
+      </div>
+    </div>
+
+    <script src="/poll.js"></script>
+    <%- include('partials/foot') %>

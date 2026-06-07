@@ -1,0 +1,42 @@
+<%
+  var when = new Date(f.kickoff).toISOString().slice(0,16).replace('T',' ') + ' UTC';
+  var label = f.stage === 'group' ? ('Group ' + f.group + ' · MD' + f.matchday) : f.stage;
+  function statusText(f) {
+    if (f.status === 'finished') return 'FT';
+    if (f.status === 'live') return 'LIVE ' + (f.liveClock || '');
+    return when;
+  }
+  function scoreText(f) {
+    return (f.home.goals != null && f.away.goals != null) ? (f.home.goals + ' – ' + f.away.goals) : 'v';
+  }
+%>
+<div class="fixture <%= f.status %>" data-fixture-id="<%= f.id %>">
+  <div class="fx-top">
+    <span class="fx-grp"><%= label %></span>
+    <span class="fx-status" data-status><%= statusText(f) %></span>
+  </div>
+  <div class="fx-body">
+    <div class="fx-team <%= f.home.mine ? 'mine' : '' %>">
+      <%- flag(f.home.team) %>
+      <span class="fx-name"><%= f.home.team %></span>
+      <%- include('tier-badge', { tier: f.home.tier, multiplier: f.home.multiplier }) %>
+      <% if (!f.home.mine && f.home.ownerName) { %><span class="owner-tag"><%= f.home.ownerName %></span><% } %>
+    </div>
+    <div class="fx-score" data-score><%= scoreText(f) %></div>
+    <div class="fx-team away <%= f.away.mine ? 'mine' : '' %>">
+      <%- flag(f.away.team) %>
+      <span class="fx-name"><%= f.away.team %></span>
+      <%- include('tier-badge', { tier: f.away.tier, multiplier: f.away.multiplier }) %>
+      <% if (!f.away.mine && f.away.ownerName) { %><span class="owner-tag"><%= f.away.ownerName %></span><% } %>
+    </div>
+  </div>
+  <div class="fx-foot">
+    <% if (f.ownVsOwn) { %>
+      <span class="vs-own">⚔️ Your two teams face each other</span>
+    <% } else { %>
+      <% var opp = f.home.mine ? f.away : f.home; %>
+      <span class="vs-other">vs <%= opp.team %><% if (opp.ownerName) { %> — held by <strong><%= opp.ownerName %></strong><% } %></span>
+    <% } %>
+    <span class="fx-points" data-points><% if (f.myPoints != null) { %>+<%= f.myPoints %> pts<% } %></span>
+  </div>
+</div>

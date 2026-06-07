@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:www.wc2026report.com)",
+      "WebFetch(domain:www.fifa.com)",
+      "WebSearch",
+      "WebFetch(domain:sports.yahoo.com)",
+      "WebFetch(domain:inside.fifa.com)",
+      "Bash(npm --version)",
+      "Bash(node -e \"const {normalizeName,canonicalKey,pairKey}=require\\('./lib/matching'\\); console.log\\(normalizeName\\('Côte d\\\\'Ivoire'\\)\\); console.log\\(canonicalKey\\('Turkey'\\), canonicalKey\\('Türkiye'\\)\\); console.log\\(canonicalKey\\('Ivory Coast'\\), canonicalKey\\(\\\\\"Côte d'Ivoire\\\\\"\\)\\); console.log\\(pairKey\\('Türkiye','USA'\\)===pairKey\\('United States','Turkey'\\)\\);\")",
+      "Bash(npm install *)",
+      "Bash(npm test *)",
+      "Bash(node scripts/e2e.js)",
+      "Bash(pkill -f \"node server.js\")",
+      "Bash(node scripts/webhook-check.js)",
+      "Bash(node scripts/check-schedule-sync.js)",
+      "Bash(node scripts/check-sync-live.js)",
+      "Bash(node scripts/check-knockout.js)",
+      "Bash(node scripts/debug-mult.js)",
+      "Bash(node -e ' *)",
+      "Bash(node scripts/heal-winners.js)",
+      "Bash(DB_PATH=data/sweepstakes.db node -e ' *)",
+      "Bash(cat)",
+      "Bash(node /tmp/flagcheck.js)",
+      "Bash(node scripts/flagcheck.js)"
+    ]
+  }
+}

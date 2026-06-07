@@ -1,0 +1,25 @@
+<table class="league" data-role="league">
+  <thead>
+    <tr>
+      <th>#</th><th class="left">Participant</th>
+      <th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th class="pts">Pts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% table.forEach(function(row) { %>
+      <tr class="<%= (typeof highlightId !== 'undefined' && row.participantId === highlightId) ? 'me' : '' %>">
+        <td><%= row.position %></td>
+        <td class="left"><%= row.name %></td>
+        <td><%= row.played %></td>
+        <td><%= row.won %></td>
+        <td><%= row.drawn %></td>
+        <td><%= row.lost %></td>
+        <td><%= row.goalDiff > 0 ? '+' + row.goalDiff : row.goalDiff %></td>
+        <td class="pts"><%= row.points %></td>
+      </tr>
+    <% }); %>
+    <% if (table.length === 0) { %>
+      <tr><td colspan="8" class="muted">No results yet.</td></tr>
+    <% } %>
+  </tbody>
+</table>

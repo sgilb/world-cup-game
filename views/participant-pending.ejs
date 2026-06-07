@@ -1,0 +1,8 @@
+<% const s = state; %>
+<%- include('partials/head', { title: s.me.name }) %>
+<div class="card narrow">
+  <h1>Hi <%= s.me.name %> 👋</h1>
+  <p>You're in <strong><%= s.game.name %></strong>, but teams haven't been distributed yet.</p>
+  <p class="muted">Check back once the admin has confirmed all participants — this page will then show your teams, fixtures and the live league table.</p>
+</div>
+<%- include('partials/foot') %>

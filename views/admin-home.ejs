@@ -1,0 +1,27 @@
+<%- include('partials/head', { title: 'Admin', showLogout: true }) %>
+<h1>Your sweepstakes games</h1>
+
+<div class="card">
+  <h2>Create a new game</h2>
+  <form method="post" action="/admin/games" class="row">
+    <input type="text" name="name" placeholder="e.g. Office World Cup 2026" required>
+    <button type="submit" class="primary">Create</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Existing games</h2>
+  <% if (games.length === 0) { %>
+    <p class="muted">No games yet — create one above.</p>
+  <% } else { %>
+    <ul class="game-list">
+      <% games.forEach(function(g) { %>
+        <li>
+          <a href="/admin/games/<%= g.id %>"><%= g.name %></a>
+          <span class="pill pill-<%= g.status %>"><%= g.status %></span>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</div>
+<%- include('partials/foot') %>

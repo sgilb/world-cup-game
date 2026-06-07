@@ -1,0 +1,142 @@
+<%- include('partials/head', { title: game.name, showLogout: true }) %>
+
+<p class="breadcrumb"><a href="/admin">← All games</a></p>
+<h1><%= game.name %> <span class="pill pill-<%= game.status %>"><%= game.status %></span></h1>
+<% if (flash) { %><div class="flash"><%= flash %></div><% } %>
+
+<% if (game.status === 'setup') { %>
+  <!-- ===== SETUP ===== -->
+  <div class="card">
+    <h2>Participants</h2>
+    <p class="muted">Add everyone playing (including yourself). When you confirm, all 48 teams are distributed.</p>
+    <form method="post" action="/admin/games/<%= game.id %>/participants" class="row">
+      <input type="text" name="name" placeholder="Participant name" required>
+      <button type="submit" class="primary">Add</button>
+    </form>
+    <% if (participants.length) { %>
+      <ul class="chip-list">
+        <% participants.forEach(function(p) { %>
+          <li class="chip">
+            <%= p.name %>
+            <form method="post" action="/admin/games/<%= game.id %>/participants/<%= p.id %>/delete" class="inline">
+              <button class="x" title="Remove">×</button>
+            </form>
+          </li>
+        <% }); %>
+      </ul>
+      <form method="post" action="/admin/games/<%= game.id %>/confirm" onsubmit="return confirm('Confirm participants and distribute all 48 teams? This cannot be undone.');">
+        <button type="submit" class="primary big">Confirm <%= participants.length %> participant(s) &amp; distribute teams →</button>
+      </form>
+      <p class="muted small"><%= participants.length %> participant(s) → ~<%= Math.floor(48 / participants.length) %>–<%= Math.ceil(48 / participants.length) %> teams each.</p>
+    <% } else { %>
+      <p class="muted">No participants yet.</p>
+    <% } %>
+  </div>
+
+  <div class="card">
+    <h2>Teams &amp; tiers (preview)</h2>
+    <p class="muted">Computed from FIFA ranking — top third A ×1, middle B ×2, bottom C ×3.</p>
+    <div class="group-grid">
+      <% const groups = [...new Set(teams.map(t => t.group_code))].sort(); %>
+      <% groups.forEach(function(gc) { %>
+        <div class="group-box">
+          <h3>Group <%= gc %></h3>
+          <ul>
+            <% teams.filter(t => t.group_code === gc).forEach(function(t) { %>
+              <li><%- flag(t.name) %> <%= t.name %> <%- include('partials/tier-badge', { tier: t.tier, multiplier: t.multiplier }) %></li>
+            <% }); %>
+          </ul>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+<% } else { %>
+  <!-- ===== ACTIVE ===== -->
+  <div class="card">
+    <h2>Participant links</h2>
+    <p class="muted">Send each person their private link. Anyone with the link can view (no login).</p>
+    <table class="links">
+      <% participants.forEach(function(p) { %>
+        <tr>
+          <td class="left"><strong><%= p.name %></strong></td>
+          <td><input class="link-field" readonly value="<%= base %>/p/<%= p.token %>" onclick="this.select()"></td>
+        </tr>
+      <% }); %>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="row between">
+      <h2>League table</h2>
+      <div class="row">
+        <form method="post" action="/admin/games/<%= game.id %>/sync-schedule" class="inline">
+          <button class="secondary" title="Pull real kickoff times & matchdays from the results API">Sync fixture times</button>
+        </form>
+        <form method="post" action="/admin/games/<%= game.id %>/poll" class="inline">
+          <button class="secondary">Poll API now</button>
+        </form>
+      </div>
+    </div>
+    <%- include('partials/league-table', { table: table }) %>
+  </div>
+
+  <div class="card">
+    <h2>Assignments</h2>
+    <div class="assign-grid">
+      <% byParticipant.forEach(function(p) { %>
+        <div class="assign-box">
+          <h3><%= p.name %></h3>
+          <ul>
+            <% p.teams.forEach(function(t) { %>
+              <li><span class="grp">[<%= t.group %>]</span> <%- flag(t.name) %> <%= t.name %> <%- include('partials/tier-badge', { tier: t.tier, multiplier: t.multiplier }) %></li>
+            <% }); %>
+          </ul>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <div class="card" id="fixtures">
+    <h2>Fixtures &amp; manual score entry</h2>
+    <p class="muted">Enter scores by hand any time. Manual entries are never overwritten by the API poller. Use the winner override only for extra-time / penalty wins on a level score.</p>
+    <table class="fixtures-admin">
+      <thead><tr><th>Date (UTC)</th><th>Grp</th><th class="left">Match</th><th>Score</th><th>Winner</th><th></th></tr></thead>
+      <tbody>
+        <% fixtures.forEach(function(fx) { %>
+          <% const ho = owners.get(fx.home_team) || {}; const ao = owners.get(fx.away_team) || {}; %>
+          <tr class="<%= fx.status %>">
+            <td class="nowrap small"><%= new Date(fx.kickoff_utc).toISOString().slice(0,16).replace('T',' ') %></td>
+            <td><%= fx.stage === 'group' ? fx.group_code : fx.stage %></td>
+            <td class="left">
+              <%- flag(fx.home_team) %> <%= fx.home_team %> <span class="owner">(<%= ho.ownerName || '—' %>)</span>
+              v
+              <%- flag(fx.away_team) %> <%= fx.away_team %> <span class="owner">(<%= ao.ownerName || '—' %>)</span>
+              <% if (fx.status === 'live') { %><span class="live-dot">LIVE <%= fx.live_clock || '' %></span><% } %>
+            </td>
+            <td colspan="3">
+              <form method="post" action="/admin/games/<%= game.id %>/fixtures/<%= fx.id %>/score" class="score-form">
+                <input type="number" name="home_goals" min="0" value="<%= fx.home_goals != null ? fx.home_goals : '' %>" required>
+                <span>–</span>
+                <input type="number" name="away_goals" min="0" value="<%= fx.away_goals != null ? fx.away_goals : '' %>" required>
+                <select name="winner" title="Only used when the score is level — pick the extra-time / penalty winner. Ignored for decisive scores.">
+                  <option value="">if level: draw</option>
+                  <option value="home" <%= fx.winner==='home'?'selected':'' %>>if level: home won (ET/pens)</option>
+                  <option value="away" <%= fx.winner==='away'?'selected':'' %>>if level: away won (ET/pens)</option>
+                </select>
+                <button class="primary small">Save</button>
+              </form>
+              <% if (fx.status === 'finished') { %>
+                <form method="post" action="/admin/games/<%= game.id %>/fixtures/<%= fx.id %>/clear" class="inline">
+                  <button class="link-btn small">clear</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('partials/foot') %>

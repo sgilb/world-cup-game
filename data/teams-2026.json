@@ -1,0 +1,64 @@
+{
+  "_comment": "2026 FIFA World Cup teams. Draw held 5 Dec 2025. fifaRank = FIFA/Coca-Cola Men's World Ranking (as of Apr 2026). Tiers (A/B/C) are COMPUTED from rank at game creation (even thirds), not stored here. Edit fifaRank to retune tiers; edit group to fix any draw errors.",
+  "teams": [
+    { "name": "Mexico", "group": "A", "fifaRank": 15 },
+    { "name": "South Korea", "group": "A", "fifaRank": 25 },
+    { "name": "South Africa", "group": "A", "fifaRank": 60 },
+    { "name": "Czechia", "group": "A", "fifaRank": 41 },
+
+    { "name": "Canada", "group": "B", "fifaRank": 30 },
+    { "name": "Qatar", "group": "B", "fifaRank": 55 },
+    { "name": "Switzerland", "group": "B", "fifaRank": 19 },
+    { "name": "Bosnia and Herzegovina", "group": "B", "fifaRank": 64 },
+
+    { "name": "Brazil", "group": "C", "fifaRank": 6 },
+    { "name": "Haiti", "group": "C", "fifaRank": 82 },
+    { "name": "Scotland", "group": "C", "fifaRank": 43 },
+    { "name": "Morocco", "group": "C", "fifaRank": 7 },
+
+    { "name": "United States", "group": "D", "fifaRank": 16 },
+    { "name": "Paraguay", "group": "D", "fifaRank": 40 },
+    { "name": "Australia", "group": "D", "fifaRank": 27 },
+    { "name": "Türkiye", "group": "D", "fifaRank": 22 },
+
+    { "name": "Germany", "group": "E", "fifaRank": 10 },
+    { "name": "Côte d'Ivoire", "group": "E", "fifaRank": 34 },
+    { "name": "Ecuador", "group": "E", "fifaRank": 24 },
+    { "name": "Curaçao", "group": "E", "fifaRank": 83 },
+
+    { "name": "Netherlands", "group": "F", "fifaRank": 8 },
+    { "name": "Japan", "group": "F", "fifaRank": 18 },
+    { "name": "Tunisia", "group": "F", "fifaRank": 46 },
+    { "name": "Sweden", "group": "F", "fifaRank": 38 },
+
+    { "name": "Iran", "group": "G", "fifaRank": 21 },
+    { "name": "Belgium", "group": "G", "fifaRank": 9 },
+    { "name": "Egypt", "group": "G", "fifaRank": 29 },
+    { "name": "New Zealand", "group": "G", "fifaRank": 85 },
+
+    { "name": "Spain", "group": "H", "fifaRank": 2 },
+    { "name": "Saudi Arabia", "group": "H", "fifaRank": 61 },
+    { "name": "Uruguay", "group": "H", "fifaRank": 17 },
+    { "name": "Cape Verde", "group": "H", "fifaRank": 68 },
+
+    { "name": "France", "group": "I", "fifaRank": 1 },
+    { "name": "Senegal", "group": "I", "fifaRank": 14 },
+    { "name": "Norway", "group": "I", "fifaRank": 31 },
+    { "name": "Iraq", "group": "I", "fifaRank": 57 },
+
+    { "name": "Argentina", "group": "J", "fifaRank": 3 },
+    { "name": "Algeria", "group": "J", "fifaRank": 28 },
+    { "name": "Austria", "group": "J", "fifaRank": 23 },
+    { "name": "Jordan", "group": "J", "fifaRank": 63 },
+
+    { "name": "Portugal", "group": "K", "fifaRank": 5 },
+    { "name": "Uzbekistan", "group": "K", "fifaRank": 50 },
+    { "name": "Colombia", "group": "K", "fifaRank": 13 },
+    { "name": "DR Congo", "group": "K", "fifaRank": 45 },
+
+    { "name": "England", "group": "L", "fifaRank": 4 },
+    { "name": "Ghana", "group": "L", "fifaRank": 73 },
+    { "name": "Panama", "group": "L", "fifaRank": 33 },
+    { "name": "Croatia", "group": "L", "fifaRank": 11 }
+  ]
+}

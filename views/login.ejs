@@ -1,0 +1,12 @@
+<%- include('partials/head', { title: 'Admin login' }) %>
+<div class="card narrow">
+  <h1>Admin login</h1>
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <form method="post" action="/admin/login">
+    <label>Password
+      <input type="password" name="password" autofocus required>
+    </label>
+    <button type="submit" class="primary">Log in</button>
+  </form>
+</div>
+<%- include('partials/foot') %>
