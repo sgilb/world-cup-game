@@ -81,6 +81,13 @@
     <%- include('partials/league-table', { table: table }) %>
   </div>
 
+  <% if (bracket && bracket.length) { %>
+  <div class="card">
+    <h2>Knockout bracket</h2>
+    <%- include('partials/bracket', { rounds: bracket }) %>
+  </div>
+  <% } %>
+
   <div class="card">
     <h2>Assignments</h2>
     <div class="assign-grid">
@@ -112,7 +119,7 @@
               <%- flag(fx.home_team) %> <%= fx.home_team %> <span class="owner">(<%= ho.ownerName || '—' %>)</span>
               v
               <%- flag(fx.away_team) %> <%= fx.away_team %> <span class="owner">(<%= ao.ownerName || '—' %>)</span>
-              <% if (fx.status === 'live') { %><span class="live-dot">LIVE <%= fx.live_clock || '' %></span><% } %>
+              <% if (fx.status === 'live') { %><span class="live-dot">LIVE</span><% } %>
             </td>
             <td colspan="3">
               <form method="post" action="/admin/games/<%= game.id %>/fixtures/<%= fx.id %>/score" class="score-form">
@@ -138,5 +145,16 @@
     </table>
   </div>
 <% } %>
+
+<div class="card danger-zone">
+  <h2>Danger zone</h2>
+  <p class="muted">Deleting <strong><%= game.name %></strong> permanently removes its
+    <%= participants.length %> participant(s), their private links, all team
+    assignments and every result. This cannot be undone.</p>
+  <form method="post" action="/admin/games/<%= game.id %>/delete"
+        onsubmit="return confirm('Delete \'<%= game.name.replace(/'/g, "\\'") %>\'? This permanently removes everything for this game and cannot be undone.');">
+    <button type="submit" class="danger">Delete this game</button>
+  </form>
+</div>
 
 <%- include('partials/foot') %>

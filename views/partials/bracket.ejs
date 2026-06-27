@@ -1,0 +1,27 @@
+<%
+  // locals: rounds (required), mine (optional array of team names to highlight)
+  var mineSet = new Set(typeof mine !== 'undefined' && mine ? mine : []);
+%>
+<% if (!rounds || rounds.length === 0) { %>
+  <p class="muted">The knockout bracket will appear here once the group stage finishes.</p>
+<% } else { %>
+  <div class="bracket">
+    <% rounds.forEach(function(round) { %>
+      <div class="bracket-col">
+        <div class="bracket-round"><%= round.stage %></div>
+        <% round.matches.forEach(function(m) { %>
+          <div class="bracket-match">
+            <% ['home', 'away'].forEach(function(key) { var sd = m[key]; %>
+              <div class="bm-side <%= m.winner === key ? 'won' : '' %> <%= sd.team && mineSet.has(sd.team) ? 'mine' : '' %>">
+                <span class="bm-flag"><%- sd.team ? flag(sd.team) : '' %></span>
+                <span class="bm-team"><%= sd.team || 'TBD' %></span>
+                <% if (sd.ownerName) { %><span class="bm-owner"><%= sd.ownerName %></span><% } %>
+                <span class="bm-goals"><%= sd.goals != null ? sd.goals : '' %></span>
+              </div>
+            <% }); %>
+          </div>
+        <% }); %>
+      </div>
+    <% }); %>
+  </div>
+<% } %>

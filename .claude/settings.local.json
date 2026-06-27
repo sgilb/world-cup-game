@@ -23,7 +23,22 @@
       "Bash(DB_PATH=data/sweepstakes.db node -e ' *)",
       "Bash(cat)",
       "Bash(node /tmp/flagcheck.js)",
-      "Bash(node scripts/flagcheck.js)"
+      "Bash(node scripts/flagcheck.js)",
+      "Bash(DB_PATH=__CMDSUB_OUTPUT__/data/del-test.db node -e ' *)",
+      "Bash(rm -f data/del-test.db*)",
+      "Bash(pkill -f \"PORT=3100\")",
+      "Bash(PORT=3100 node server.js)",
+      "Bash(node scripts/setup-knockout-preview.js)",
+      "Bash(curl -s \"http://localhost:3100/p/e5af6c80a7263f98051fc18e9d63c4c6\")",
+      "Bash(xargs -r kill)",
+      "Bash(curl -s -c /tmp/v.txt -o /dev/null -d \"password=test123\" http://localhost:3100/admin/login)",
+      "Bash(curl -s -b /tmp/v.txt http://localhost:3100/admin/games/9)",
+      "Bash(curl -s http://localhost:3100/style.css)",
+      "Bash(node scripts/check-bracket.js)",
+      "Bash(node -e 'const ejs=require\\(\"ejs\"\\);ejs.renderFile\\(\"views/partials/bracket.ejs\",{rounds:[{stage:\"Final\",matches:[{winner:\"home\",home:{team:\"Spain\",ownerName:\"X\",goals:1},away:{team:\"France\",ownerName:\"Y\",goals:0}}]}],flag:\\(n\\)=>n?\"<img>\":\"\"}\\).then\\(h=>console.log\\(\"OK no-mine render, has Final:\",h.includes\\(\"Final\"\\)\\)\\).catch\\(e=>{console.error\\(\"THROW\",e.message\\);process.exit\\(1\\)}\\)')",
+      "Bash(node -e 'const ejs=require\\(\"ejs\"\\);ejs.renderFile\\(\"views/partials/bracket.ejs\",{rounds:[],flag:\\(n\\)=>\"\"}\\).then\\(h=>console.log\\(\"placeholder shown:\",h.includes\\(\"once the group stage finishes\"\\)\\)\\).catch\\(e=>{console.error\\(\"THROW\",e.message\\);process.exit\\(1\\)}\\)')",
+      "Bash(DB_PATH=data/fb-test.db node -e ' *)",
+      "Bash(curl -s \"http://localhost:3100/p/3923968ea0e01fae943d1f14d5cd525a\")"
     ]
   }
 }

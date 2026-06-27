@@ -1,5 +1,6 @@
 <%- include('partials/head', { title: 'Admin', showLogout: true }) %>
 <h1>Your sweepstakes games</h1>
+<% if (typeof flash !== 'undefined' && flash) { %><div class="flash"><%= flash %></div><% } %>
 
 <div class="card">
   <h2>Create a new game</h2>
@@ -19,6 +20,10 @@
         <li>
           <a href="/admin/games/<%= g.id %>"><%= g.name %></a>
           <span class="pill pill-<%= g.status %>"><%= g.status %></span>
+          <form method="post" action="/admin/games/<%= g.id %>/delete" class="inline"
+                onsubmit="return confirm('Delete \'<%= g.name.replace(/'/g, "\\'") %>\'? This permanently removes its participants, their links, team assignments and all results. This cannot be undone.');">
+            <button class="link-btn danger" title="Delete game">Delete</button>
+          </form>
         </li>
       <% }); %>
     </ul>

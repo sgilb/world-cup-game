@@ -3,7 +3,7 @@
   var label = f.stage === 'group' ? ('Group ' + f.group + ' · MD' + f.matchday) : f.stage;
   function statusText(f) {
     if (f.status === 'finished') return 'FT';
-    if (f.status === 'live') return 'LIVE ' + (f.liveClock || '');
+    if (f.status === 'live') return 'LIVE';
     return when;
   }
   function scoreText(f) {

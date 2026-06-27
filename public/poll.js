@@ -8,7 +8,7 @@
 
   function statusText(f) {
     if (f.status === 'finished') return 'FT';
-    if (f.status === 'live') return 'LIVE ' + (f.liveClock || '');
+    if (f.status === 'live') return 'LIVE';
     return new Date(f.kickoff).toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
   }
   function scoreText(f) {

@@ -71,6 +71,10 @@ button.secondary { background: var(--accent2); color: #fff; }
 button.big { font-size: 16px; padding: 12px 18px; margin-top: 12px; }
 button.small { padding: 5px 9px; font-size: 12px; }
 button.link-btn { background: none; color: var(--muted); padding: 4px; }
+button.danger { background: var(--tierC); color: #fff; }
+button.link-btn.danger { background: none; color: #fca5a5; }
+.danger-zone { border-color: #5b2330; }
+.danger-zone h2 { color: #fca5a5; }
 button.x { background: none; color: var(--muted); padding: 0 4px; font-size: 16px; }
 .inline { display: inline; }
 .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
@@ -159,6 +163,22 @@ table.league tr.me td { color: #aef3e6; }
 .vs-own { color: var(--tierB); font-weight: 600; }
 .fx-points { color: var(--win); font-weight: 700; }
 
+/* Knockout bracket (column per round, horizontally scrollable) */
+.bracket { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 10px; align-items: flex-start; }
+.bracket-col { flex: 0 0 auto; min-width: 210px; display: flex; flex-direction: column; gap: 10px; }
+.bracket-round { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.bracket-match { border: 1px solid var(--line); border-radius: 8px; background: var(--card2); overflow: hidden; }
+.bm-side { display: flex; align-items: center; gap: 6px; padding: 7px 9px; font-size: 13px; }
+.bm-side + .bm-side { border-top: 1px solid var(--line); }
+.bm-flag { display: inline-flex; }
+.bm-flag .flag { margin: 0; }
+.bm-team { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bm-owner { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.bm-goals { font-weight: 700; min-width: 12px; text-align: right; }
+.bm-side.won { background: rgba(34, 197, 94, 0.12); }
+.bm-side.won .bm-team { font-weight: 700; }
+.bm-side.mine .bm-team { color: var(--accent); }
+
 /* Admin fixtures */
 table.fixtures-admin { width: 100%; border-collapse: collapse; }
 table.fixtures-admin th, table.fixtures-admin td { padding: 7px 6px; border-bottom: 1px solid var(--line); font-size: 13px; text-align: center; }
@@ -169,3 +189,33 @@ table.fixtures-admin th.left, table.fixtures-admin td.left { text-align: left; }
 .score-form input[type=number] { width: 50px; text-align: center; }
 .live-dot { color: var(--live); font-weight: 700; font-size: 12px; margin-left: 8px; }
 tr.finished td { color: var(--muted); }
+
+/* Responsive: stack the admin fixtures/score table into cards on small screens
+   so the score-entry UI never overflows horizontally. */
+@media (max-width: 640px) {
+  .container { padding: 14px; }
+
+  table.fixtures-admin thead { display: none; }
+  table.fixtures-admin,
+  table.fixtures-admin tbody,
+  table.fixtures-admin tr,
+  table.fixtures-admin td { display: block; width: 100%; }
+
+  table.fixtures-admin tr {
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--card2); padding: 10px 12px; margin-bottom: 10px;
+  }
+  table.fixtures-admin td { border: none; text-align: left; padding: 2px 0; }
+  table.fixtures-admin td.left { font-weight: 600; padding: 4px 0; }   /* match line */
+
+  /* date + group share the top line */
+  table.fixtures-admin td.nowrap,
+  table.fixtures-admin tr td:nth-of-type(2) {
+    display: inline-block; width: auto; color: var(--muted);
+    font-size: 12px; margin-right: 10px;
+  }
+
+  .score-form { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .score-form select { flex: 1 1 100%; }            /* winner select gets its own line */
+  .score-form input[type=number] { width: 56px; }   /* comfortable touch target */
+}

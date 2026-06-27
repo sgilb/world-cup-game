@@ -32,7 +32,7 @@ router.use(requireAdmin);
 
 // Dashboard: list games.
 router.get('/', (req, res) => {
-  res.render('admin-home', { games: game.listGames() });
+  res.render('admin-home', { games: game.listGames(), flash: req.query.flash || null });
 });
 
 // Create a game.
@@ -40,6 +40,13 @@ router.post('/games', (req, res) => {
   const name = (req.body.name || '').trim() || 'World Cup Sweepstakes';
   const id = game.createGame(name);
   res.redirect(`/admin/games/${id}`);
+});
+
+// Delete a game (cascades to participants, teams and fixtures).
+router.post('/games/:id/delete', (req, res, next) => {
+  const ok = game.deleteGame(Number(req.params.id));
+  if (!ok) return next();
+  res.redirect('/admin?flash=' + encodeURIComponent('Game deleted.'));
 });
 
 // Game dashboard (setup or active).

@@ -34,6 +34,14 @@
         </div>
       </div>
 
+      <!-- Knockout bracket -->
+      <% if (s.bracket && s.bracket.length) { %>
+      <div class="card">
+        <h2>Knockout bracket</h2>
+        <%- include('partials/bracket', { rounds: s.bracket, mine: s.myTeams.map(function(t){ return t.name; }) }) %>
+      </div>
+      <% } %>
+
       <!-- My fixtures -->
       <div class="card">
         <h2>Your fixtures</h2>
