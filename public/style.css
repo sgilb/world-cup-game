@@ -157,11 +157,13 @@ table.league tr.me td { color: #aef3e6; }
 .fx-team.away { justify-content: flex-end; }
 .fx-team .fx-name { font-weight: 600; }
 .fx-team.mine .fx-name { color: var(--accent); }
+.accent { color: var(--accent); }
 .fx-score { font-size: 20px; font-weight: 800; min-width: 64px; text-align: center; }
 .owner-tag { font-size: 11px; color: var(--muted); background: #0b111b; padding: 1px 6px; border-radius: 10px; }
 .fx-foot { display: flex; justify-content: space-between; margin-top: 8px; font-size: 13px; color: var(--muted); }
 .vs-own { color: var(--tierB); font-weight: 600; }
 .fx-points { color: var(--win); font-weight: 700; }
+.fx-points-zero { color: var(--muted); }
 
 /* Knockout bracket (column per round, horizontally scrollable) */
 .bracket { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 10px; align-items: flex-start; }

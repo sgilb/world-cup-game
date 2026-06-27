@@ -6,10 +6,12 @@
   var token = root.getAttribute('data-token');
   var INTERVAL = 30000;
 
+  // All users are in the UK, so display kickoff times as BST (UTC+1).
   function statusText(f) {
     if (f.status === 'finished') return 'FT';
     if (f.status === 'live') return 'LIVE';
-    return new Date(f.kickoff).toISOString().slice(0, 16).replace('T', ' ') + ' UTC';
+    return new Date(new Date(f.kickoff).getTime() + 3600000)
+      .toISOString().slice(0, 16).replace('T', ' ') + ' BST';
   }
   function scoreText(f) {
     return (f.home.goals != null && f.away.goals != null)
@@ -28,7 +30,10 @@
       var pt = el.querySelector('[data-points]');
       if (st) st.textContent = statusText(f);
       if (sc) sc.textContent = scoreText(f);
-      if (pt) pt.textContent = (f.myPoints != null) ? ('+' + f.myPoints + ' pts') : '';
+      if (pt) {
+        pt.textContent = (f.myPoints != null) ? ('+' + f.myPoints + ' pts') : '';
+        pt.classList.toggle('fx-points-zero', f.myPoints === 0);
+      }
     });
   }
 

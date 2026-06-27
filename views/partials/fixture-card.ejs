@@ -1,5 +1,6 @@
 <%
-  var when = new Date(f.kickoff).toISOString().slice(0,16).replace('T',' ') + ' UTC';
+  // All users are in the UK, so display times as BST (UTC+1).
+  var when = new Date(new Date(f.kickoff).getTime() + 3600000).toISOString().slice(0,16).replace('T',' ') + ' BST';
   var label = f.stage === 'group' ? ('Group ' + f.group + ' · MD' + f.matchday) : f.stage;
   function statusText(f) {
     if (f.status === 'finished') return 'FT';
@@ -34,9 +35,8 @@
     <% if (f.ownVsOwn) { %>
       <span class="vs-own">⚔️ Your two teams face each other</span>
     <% } else { %>
-      <% var opp = f.home.mine ? f.away : f.home; %>
-      <span class="vs-other">vs <%= opp.team %><% if (opp.ownerName) { %> — held by <strong><%= opp.ownerName %></strong><% } %></span>
+      <span></span>
     <% } %>
-    <span class="fx-points" data-points><% if (f.myPoints != null) { %>+<%= f.myPoints %> pts<% } %></span>
+    <span class="fx-points<% if (f.myPoints === 0) { %> fx-points-zero<% } %>" data-points><% if (f.myPoints != null) { %>+<%= f.myPoints %> pts<% } %></span>
   </div>
 </div>

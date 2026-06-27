@@ -108,12 +108,12 @@
     <h2>Fixtures &amp; manual score entry</h2>
     <p class="muted">Enter scores by hand any time. Manual entries are never overwritten by the API poller. Use the winner override only for extra-time / penalty wins on a level score.</p>
     <table class="fixtures-admin">
-      <thead><tr><th>Date (UTC)</th><th>Grp</th><th class="left">Match</th><th>Score</th><th>Winner</th><th></th></tr></thead>
+      <thead><tr><th>Date (BST)</th><th>Group</th><th class="left">Match</th><th>Score</th><th>Winner</th><th></th></tr></thead>
       <tbody>
         <% fixtures.forEach(function(fx) { %>
           <% const ho = owners.get(fx.home_team) || {}; const ao = owners.get(fx.away_team) || {}; %>
           <tr class="<%= fx.status %>">
-            <td class="nowrap small"><%= new Date(fx.kickoff_utc).toISOString().slice(0,16).replace('T',' ') %></td>
+            <td class="nowrap small"><%= new Date(new Date(fx.kickoff_utc).getTime() + 3600000).toISOString().slice(0,16).replace('T',' ') %></td>
             <td><%= fx.stage === 'group' ? fx.group_code : fx.stage %></td>
             <td class="left">
               <%- flag(fx.home_team) %> <%= fx.home_team %> <span class="owner">(<%= ho.ownerName || '—' %>)</span>

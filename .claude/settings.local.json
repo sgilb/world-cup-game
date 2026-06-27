@@ -38,7 +38,9 @@
       "Bash(node -e 'const ejs=require\\(\"ejs\"\\);ejs.renderFile\\(\"views/partials/bracket.ejs\",{rounds:[{stage:\"Final\",matches:[{winner:\"home\",home:{team:\"Spain\",ownerName:\"X\",goals:1},away:{team:\"France\",ownerName:\"Y\",goals:0}}]}],flag:\\(n\\)=>n?\"<img>\":\"\"}\\).then\\(h=>console.log\\(\"OK no-mine render, has Final:\",h.includes\\(\"Final\"\\)\\)\\).catch\\(e=>{console.error\\(\"THROW\",e.message\\);process.exit\\(1\\)}\\)')",
       "Bash(node -e 'const ejs=require\\(\"ejs\"\\);ejs.renderFile\\(\"views/partials/bracket.ejs\",{rounds:[],flag:\\(n\\)=>\"\"}\\).then\\(h=>console.log\\(\"placeholder shown:\",h.includes\\(\"once the group stage finishes\"\\)\\)\\).catch\\(e=>{console.error\\(\"THROW\",e.message\\);process.exit\\(1\\)}\\)')",
       "Bash(DB_PATH=data/fb-test.db node -e ' *)",
-      "Bash(curl -s \"http://localhost:3100/p/3923968ea0e01fae943d1f14d5cd525a\")"
+      "Bash(curl -s \"http://localhost:3100/p/3923968ea0e01fae943d1f14d5cd525a\")",
+      "Bash(grep -rln \"+0\\\\|+ \\\\|points\\\\|+\\\\${\" public views)",
+      "Bash(grep -rn \"+0\\\\|+ \\\\|+\\\\${\\\\|points\\\\|earned\\\\|delta\\\\|pts\" public/poll.js views/partials/fixture-card.ejs views/participant.ejs views/partials/league-table.ejs)"
     ]
   }
 }
