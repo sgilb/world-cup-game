@@ -39,6 +39,23 @@ test('football-data: penalty-shootout winner is treated as a win', () => {
   assert.strictEqual(n.status, 'finished');
 });
 
+test('football-data: penalty-shootout goals are stripped from the score', () => {
+  // 1-1 after extra time, home wins 4-2 on penalties. football-data bakes the
+  // shoot-out into fullTime (5-3); we keep the level end-of-ET score and let the
+  // winner carry the result.
+  const n = fd.normalize({
+    status: 'FINISHED',
+    homeTeam: { name: 'Spain' }, awayTeam: { name: 'Uruguay' },
+    score: {
+      winner: 'HOME_TEAM', duration: 'PENALTY_SHOOTOUT',
+      fullTime: { home: 5, away: 3 }, penalties: { home: 4, away: 2 },
+    },
+  });
+  assert.strictEqual(n.homeGoals, 1);
+  assert.strictEqual(n.awayGoals, 1);
+  assert.strictEqual(n.winner, 'home');
+});
+
 test('football-data: draw and scheduled have no/null winner', () => {
   const draw = fd.normalize({ status: 'FINISHED', homeTeam: {}, awayTeam: {}, score: { winner: 'DRAW', fullTime: { home: 0, away: 0 } } });
   assert.strictEqual(draw.winner, 'draw');
